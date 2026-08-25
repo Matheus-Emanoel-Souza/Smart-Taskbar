@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <RootNamespace>SmartTaskbar.Windows</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseWindowsForms>false</UseWindowsForms>
+    <!--
+      Camada de integração com o Win32 API: enumeração de janelas, hooks de
+      eventos (SetWinEventHook), ativação de janelas e extração de ícones.
+      Isolada do Core para que a lógica de negócio não dependa de P/Invoke.
+    -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartTaskbar.Core\SmartTaskbar.Core.csproj" />
+  </ItemGroup>
+
+</Project>

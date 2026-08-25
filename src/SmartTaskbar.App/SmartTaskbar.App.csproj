@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>SmartTaskbar</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <RootNamespace>SmartTaskbar.App</RootNamespace>
+
+    <!-- Publicação portátil: self-contained (não exige .NET instalado) + single-file. -->
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <!--
+      InvariantGlobalization=true quebra o WPF: binding lança XamlParseException
+      ("Cannot find non-neutral culture related to 'en-us'") porque XmlLanguage precisa
+      de dados de cultura reais. Confirmado rodando o publish — deixar false.
+    -->
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <!-- ReadyToRun reduz o tempo de start-up (JIT antecipado) sem custar admin/instalação. -->
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartTaskbar.Core\SmartTaskbar.Core.csproj" />
+    <ProjectReference Include="..\SmartTaskbar.Windows\SmartTaskbar.Windows.csproj" />
+    <ProjectReference Include="..\SmartTaskbar.Infrastructure\SmartTaskbar.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
