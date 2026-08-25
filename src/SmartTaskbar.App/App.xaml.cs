@@ -53,9 +53,29 @@ public partial class App : System.Windows.Application
 
         var log = _services.GetRequiredService<ILogger>().ForContext<App>();
 
+        // Circuito de proteção: um erro de binding/renderização estrutural pode se repetir a
+        // cada frame e, se apenas engolido, spamma o log (visto na prática: 20MB em segundos).
+        // Tolera falhas isoladas; encerra o app se a mesma exceção repetir demais em sequência.
+        var lastExceptionMessage = string.Empty;
+        var repeatCount = 0;
+        const int maxConsecutiveRepeats = 5;
+
         DispatcherUnhandledException += (_, args) =>
         {
             log.Error(args.Exception, "Exceção não tratada na thread de UI");
+
+            var message = args.Exception.Message;
+            repeatCount = message == lastExceptionMessage ? repeatCount + 1 : 1;
+            lastExceptionMessage = message;
+
+            if (repeatCount >= maxConsecutiveRepeats)
+            {
+                log.Fatal("Mesma exceção repetiu {Count}x em sequência — encerrando para não travar em loop de erro", repeatCount);
+                args.Handled = true;
+                Shutdown();
+                return;
+            }
+
             args.Handled = true; // loga e mantém o app vivo em vez de derrubar a barra
         };
         AppDomain.CurrentDomain.UnhandledException += (_, args) =>

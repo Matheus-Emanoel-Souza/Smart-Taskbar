@@ -102,6 +102,7 @@ public partial class BarWindow : Window
         var panel = new ContextPanelWindow(contextVm.Id, _orchestrator, _contexts, _assignments, _activator, _icons)
         {
             Owner = this,
+            Opacity = 0, // evita flash na posição errada até o primeiro reposicionamento
         };
 
         // PointToScreen devolve pixels físicos; converte para DIPs (o que Window.Left/Top espera)
@@ -109,12 +110,21 @@ public partial class BarWindow : Window
         var devicePoint = button.PointToScreen(new Point(0, 0));
         var toDip = PresentationSource.FromVisual(button)?.CompositionTarget?.TransformFromDevice;
         var anchor = toDip?.Transform(devicePoint) ?? devicePoint;
+        var bottomAnchorY = anchor.Y - 8;
 
-        panel.Loaded += (_, _) =>
+        // Ancora pela borda de baixo, não pela de cima: painel abre e cresce para cima a
+        // partir da pílula, nunca para baixo. Recalcula em SizeChanged (não só Loaded) porque
+        // no Loaded o SizeToContent ainda não terminou — ActualHeight vem 0 ali, o que fazia
+        // o painel nascer colado no topo do botão e crescer para baixo.
+        void Reposition(object? _, EventArgs __)
         {
             panel.Left = anchor.X;
-            panel.Top = anchor.Y - panel.ActualHeight - 8;
-        };
+            panel.Top = bottomAnchorY - panel.ActualHeight;
+            panel.Opacity = 1;
+        }
+
+        panel.Loaded += Reposition;
+        panel.SizeChanged += Reposition;
         panel.Closed += (_, _) =>
         {
             if (ReferenceEquals(_openPanel, panel))
