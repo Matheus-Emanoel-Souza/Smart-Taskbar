@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>SmartTaskbar.Core</RootNamespace>
+    <!--
+      Biblioteca de domínio pura: modelos, motor de regras e gerenciamento de
+      contextos. Não referencia Windows Forms/WPF/P-Invoke — mantém a lógica
+      de negócio testável e independente de plataforma.
+    -->
+  </PropertyGroup>
+
+</Project>

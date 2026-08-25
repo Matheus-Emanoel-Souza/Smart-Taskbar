@@ -1,0 +1,19 @@
+.claude
+
+# Build outputs
+bin/
+obj/
+publish/
+out/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# Dados gerados em runtime pelo app portátil (não versionar dados do usuário)
+src/SmartTaskbar.App/Data/
+
+# Test results
+TestResults/

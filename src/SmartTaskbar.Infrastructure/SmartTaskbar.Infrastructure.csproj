@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>SmartTaskbar.Infrastructure</RootNamespace>
+    <!--
+      Persistência (JSON), configurações (caminho portátil) e logging. Implementa as
+      interfaces de repositório declaradas em Core, sem que o Core conheça o formato de
+      armazenamento em disco.
+    -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartTaskbar.Core\SmartTaskbar.Core.csproj" />
+  </ItemGroup>
+
+</Project>
