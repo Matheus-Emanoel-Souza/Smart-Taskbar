@@ -30,7 +30,10 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:WindowItemViewModel}">
                             <Button Style="{StaticResource WindowRowStyle}"
-                                    Command="{Binding ActivateCommand}">
+                                    Command="{Binding ActivateCommand}"
+                                    PreviewMouseLeftButtonDown="OnRowPreviewMouseDown"
+                                    PreviewMouseMove="OnRowPreviewMouseMove"
+                                    ToolTip="Clique para abrir · arraste até um contexto na barra para mover">
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Mover para" ItemsSource="{Binding MoveTargets}">

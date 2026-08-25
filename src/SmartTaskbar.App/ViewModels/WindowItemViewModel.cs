@@ -58,6 +58,9 @@ public sealed class WindowItemViewModel
         });
     }
 
+    /// <summary>Usado pelo drag-and-drop (arrastar a janela até uma pílula de contexto na barra).</summary>
+    public void MoveToContext(Guid contextId) => MoveTo(contextId);
+
     private void MoveTo(Guid contextId)
     {
         _assignments.Assign(_window.StableKey, contextId);

@@ -1,7 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:SmartTaskbar.App.Converters">
 
     <FontFamily x:Key="AppFont">Segoe UI Variable, Segoe UI</FontFamily>
+
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converters:ExpandGlyphConverter x:Key="ExpandGlyphConverter" />
 
     <!-- Botão-pílula de contexto na barra: ícone + nome + contador. -->
     <Style x:Key="ContextPillStyle" TargetType="Button">

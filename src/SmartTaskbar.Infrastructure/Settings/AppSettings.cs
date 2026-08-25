@@ -7,4 +7,10 @@ public sealed class AppSettings
     public double BarX { get; set; } = double.NaN;
 
     public double BarY { get; set; } = double.NaN;
+
+    /// <summary>Se falso, a barra abre recolhida (só o botão de expandir visível).</summary>
+    public bool BarExpanded { get; set; } = true;
+
+    /// <summary>Nome do <c>BarDockMode</c> (App.Models) — string aqui porque Infrastructure não referencia App.</summary>
+    public string BarDock { get; set; } = "Free";
 }
